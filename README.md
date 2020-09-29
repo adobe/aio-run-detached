@@ -21,3 +21,11 @@ npm install @adobe/aio-run-detached
 ```
 
 `aio-run-detached` will report back to the App plugin the process id of the detached process, so that the App plugin can terminate the detached process when the App plugin command exits.
+
+### Contributing
+
+Contributions are welcome! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
+
+### Licensing
+
+This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
