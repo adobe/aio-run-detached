@@ -1,0 +1,18 @@
+{
+  "name": "@adobe/aio-run-detached",
+  "version": "1.0.0",
+  "description": "Runs commands in a detached process, reports to the parent process the detached process pid",
+  "main": "index.js",
+  "bin": {
+    "aio-run-detached": "./bin/run"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "debug": "^4.2.0"
+  }
+}
