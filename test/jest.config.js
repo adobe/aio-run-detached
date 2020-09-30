@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -11,8 +9,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const args = process.argv.slice(2)
-
-require('../src/index.js')
-  .run(args)
-  .catch(console.error)
+module.exports = {
+  rootDir: '..',
+  collectCoverage: true,
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.js'
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      lines: 100,
+      statements: 100
+    }
+  },
+  reporters: [
+    'default',
+    'jest-junit'
+  ],
+  testEnvironment: 'node',
+  setupFilesAfterEnv: [
+    '<rootDir>/test/jest.setup.js'
+  ]
+}

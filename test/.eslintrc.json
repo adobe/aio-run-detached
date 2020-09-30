@@ -1,0 +1,9 @@
+{
+  "globals": {
+    "fixtureFile": true,
+    "fixtureJson": true
+  },
+  "rules": {
+      "node/no-unpublished-require": 0
+  }
+}

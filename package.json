@@ -2,17 +2,34 @@
   "name": "@adobe/aio-run-detached",
   "version": "1.0.0",
   "description": "Runs commands in a detached process, reports to the parent process the detached process pid",
-  "main": "index.js",
+  "main": "./src/index.js",
   "bin": {
     "aio-run-detached": "./bin/run"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src test",
+    "test": "npm run lint && npm run unit-tests",
+    "unit-tests": "jest --config test/jest.config.js --maxWorkers=2"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "debug": "^4.2.0"
+  },
+  "devDependencies": {
+    "@adobe/eslint-config-aio-lib-config": "^1.2.1",
+    "eol": "^0.9.1",
+    "eslint": "^6.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.4.2",
+    "jest-junit": "^11.1.0",
+    "stdout-stderr": "^0.1.13"
   }
 }
