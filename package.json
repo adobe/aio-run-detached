@@ -1,6 +1,6 @@
 {
   "name": "@adobe/aio-run-detached",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Runs commands in a detached process, reports to the parent process the detached process pid",
   "main": "./src/index.js",
   "bin": {
