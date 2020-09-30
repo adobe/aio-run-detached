@@ -2,6 +2,10 @@
   "name": "@adobe/aio-run-detached",
   "version": "1.0.1",
   "description": "Runs commands in a detached process, reports to the parent process the detached process pid",
+  "repository": "https://github.com/adobe/aio-run-detached",
+  "bugs": {
+    "url": "https://github.com/adobe/aio-run-detached/issues"
+  },
   "main": "./src/index.js",
   "bin": {
     "aio-run-detached": "./bin/run"
@@ -20,7 +24,7 @@
   "devDependencies": {
     "@adobe/eslint-config-aio-lib-config": "^1.2.1",
     "eol": "^0.9.1",
-    "eslint": "^6.0.0",
+    "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^23.20.0",
