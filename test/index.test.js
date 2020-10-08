@@ -38,6 +38,10 @@ test('run (with args, process.send available)', async () => {
     data: {
       args,
       bin: 'aio-run-detached',
+      logs: {
+        stdout: `${args[0]}.out.log`,
+        stderr: `${args[0]}.err.log`
+      },
       pid
     },
     type: 'long-running-process'

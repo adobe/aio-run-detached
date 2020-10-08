@@ -51,6 +51,10 @@ async function run (args = []) {
       data: {
         bin: Object.keys(pkg.bin)[0],
         args,
+        logs: {
+          stdout: outFile,
+          stderr: errFile
+        },
         pid: child.pid
       }
     }
