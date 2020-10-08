@@ -4,6 +4,7 @@ jest.mock('fs')
 jest.mock('child_process')
 const { fork } = require('child_process')
 const fs = require('fs')
+const path = require('path')
 
 beforeAll(() => {
   process.exit = jest.fn()
@@ -40,8 +41,8 @@ test('run (with args, process.send available)', async () => {
       args,
       bin: 'aio-run-detached',
       logs: {
-        stdout: `logs/${args[0]}.out.log`,
-        stderr: `logs/${args[0]}.err.log`
+        stdout: path.join('logs', `${args[0]}.out.log`),
+        stderr: path.join('logs', `${args[0]}.err.log`)
       },
       pid
     },
