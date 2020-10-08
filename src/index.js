@@ -13,6 +13,7 @@ const { fork } = require('child_process')
 const debug = require('debug')('aio-run-detached')
 const path = require('path')
 const pkg = require(path.join(__dirname, '..', 'package.json'))
+const fs = require('fs')
 
 /**
  * Run the commands specified in a detached process.
@@ -24,11 +25,20 @@ async function run (args = []) {
     throw new Error('You must specify at least one argument')
   }
 
+  const outFile = `${args[0]}.out.log`
+  const errFile = `${args[0]}.err.log`
+  debug(`Writing stdout to ${outFile}, stderr to ${errFile}`)
+
   debug(`Running command detached: ${JSON.stringify(args)}`)
   const child = fork(args[0], args.slice(1), {
     detached: true,
     windowsHide: true,
-    stdio: 'ignore'
+    stdio: [
+      'ignore', 
+      fs.openSync(outFile, 'a'), 
+      fs.openSync(errFile, 'a'),
+      'ipc'
+    ]
   })
   debug(`Command detached PID: ${child.pid}`)
 
