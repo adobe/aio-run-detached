@@ -20,9 +20,17 @@ governing permissions and limitations under the License.
 
 Helper command for the Adobe I/O CLI [App Plugin](https://github.com/adobe/aio-cli-plugin-app) and Adobe [Project Firefly](https://www.adobe.io/apis/experienceplatform/project-firefly/docs.html).
 
-This command runs another command in a detached process, and reports to the parent process that calls it, the detached process' pid for cleanup in the future.
+
+This command runs another command in a [detached process](https://nodejs.org/api/child_process.html#child_process_options_detached), and reports to the parent process that calls it, the detached process' pid for cleanup in the future.
 
 You would run your command in a detached process if it is a long running process, and the use case for it is running a command in a [Project Firefly Event Hook.](https://www.adobe.io/apis/experienceplatform/project-firefly/docs.html#!AdobeDocs/project-firefly/master/guides/app-hooks.md)
+
+## Usage
+
+You will need to add `@adobe/aio-run-detached` as a dependency in your project:
+```bash
+npm install @adobe/aio-run-detached
+```
 
 For example, if you have a long running command called `long-running-process.sh`, and you want to run it in the `pre-app-run` app hook, you prefix your command with `aio-run-detached` like so in your app's `package.json`:
 ```json
@@ -33,17 +41,34 @@ For example, if you have a long running command called `long-running-process.sh`
 }
 ```
 
-You will need to add `@adobe/aio-run-detached` as a dependency:
-```bash
-npm install @adobe/aio-run-detached
-```
-
 `aio-run-detached` will report back to the App plugin the process id of the detached process, so that the App plugin can terminate the detached process when the App plugin command exits.
 
-### Contributing
+## Logging
+
+Since it is a detached process, logs from stdout and stderr are not available in the terminal. Instead, the logs are written out to disk.
+
+For example:
+```json
+{
+  "scripts": {
+    "pre-app-run": "aio-run-detached long-running-process.sh"
+  }
+}
+```
+
+Log file name format: `{processname}.out.log` and `{processname}`.err.log,
+
+In this example, your `stdout` log will be called `long-running-process.sh.out.log` and
+your `stderr` log will be called `long-running-process.sh.err.log`.
+
+Both files will be appended to, and will be created if they don't exist.
+
+Since the logs are appended to the file, it is recommended that your logs include a timestamp to differentiate between different runs of the process.
+
+## Contributing
 
 Contributions are welcome! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
 
-### Licensing
+## Licensing
 
 This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
