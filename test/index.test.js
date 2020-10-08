@@ -3,6 +3,7 @@ const index = require('../src/index')
 jest.mock('fs')
 jest.mock('child_process')
 const { fork } = require('child_process')
+const fs = require('fs')
 
 beforeAll(() => {
   process.exit = jest.fn()
@@ -39,8 +40,8 @@ test('run (with args, process.send available)', async () => {
       args,
       bin: 'aio-run-detached',
       logs: {
-        stdout: `${args[0]}.out.log`,
-        stderr: `${args[0]}.err.log`
+        stdout: `logs/${args[0]}.out.log`,
+        stderr: `logs/${args[0]}.err.log`
       },
       pid
     },
@@ -55,6 +56,22 @@ test('run (with args, process.send not available)', async () => {
     unref: jest.fn()
   }
   fork.mockReturnValueOnce(forkMockReturn)
+
+  const args = ['command', 'arg1']
+  process.send = undefined
+  await index.run(args)
+
+  expect(forkMockReturn.unref).toHaveBeenCalled()
+})
+
+test('run (with args, logs folder exists', async () => {
+  const pid = 789
+  const forkMockReturn = {
+    pid,
+    unref: jest.fn()
+  }
+  fork.mockReturnValueOnce(forkMockReturn)
+  fs.existsSync.mockReturnValueOnce(true)
 
   const args = ['command', 'arg1']
   process.send = undefined
