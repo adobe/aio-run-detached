@@ -34,8 +34,8 @@ async function run (args = []) {
     detached: true,
     windowsHide: true,
     stdio: [
-      'ignore', 
-      fs.openSync(outFile, 'a'), 
+      'ignore',
+      fs.openSync(outFile, 'a'),
       fs.openSync(errFile, 'a'),
       'ipc'
     ]

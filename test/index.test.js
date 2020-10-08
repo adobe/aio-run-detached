@@ -1,5 +1,6 @@
 const index = require('../src/index')
 
+jest.mock('fs')
 jest.mock('child_process')
 const { fork } = require('child_process')
 
