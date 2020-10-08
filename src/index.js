@@ -25,6 +25,8 @@ async function run (args = []) {
     throw new Error('You must specify at least one argument')
   }
 
+  fs.accessSync(args[0], fs.constants.X_OK)
+
   const outFile = `${args[0]}.out.log`
   const errFile = `${args[0]}.err.log`
   debug(`Writing stdout to ${outFile}, stderr to ${errFile}`)
