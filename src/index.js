@@ -15,6 +15,8 @@ const path = require('path')
 const pkg = require(path.join(__dirname, '..', 'package.json'))
 const fs = require('fs')
 
+const LOGS_FOLDER = 'logs'
+
 /**
  * Run the commands specified in a detached process.
  *
@@ -27,8 +29,12 @@ async function run (args = []) {
 
   fs.accessSync(args[0], fs.constants.X_OK)
 
-  const outFile = `${args[0]}.out.log`
-  const errFile = `${args[0]}.err.log`
+  if (!fs.existsSync(LOGS_FOLDER)) {
+    fs.mkdirSync(LOGS_FOLDER)
+  }
+
+  const outFile = path.join(LOGS_FOLDER, `${args[0]}.out.log`)
+  const errFile = path.join(LOGS_FOLDER, `${args[0]}.err.log`)
   debug(`Writing stdout to ${outFile}, stderr to ${errFile}`)
 
   debug(`Running command detached: ${JSON.stringify(args)}`)
