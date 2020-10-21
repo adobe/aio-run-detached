@@ -46,8 +46,8 @@ test('run (with args, process.send available)', async () => {
       args,
       bin: 'aio-run-detached',
       logs: {
-        stdout: expect.stringMatching(path.join('logs', `${args[0]}.out.log`)),
-        stderr: expect.stringMatching(path.join('logs', `${args[0]}.err.log`))
+        stdout: expect.stringContaining(path.join('logs', `${args[0]}.out.log`)),
+        stderr: expect.stringContaining(path.join('logs', `${args[0]}.err.log`))
       },
       pid
     },
@@ -72,7 +72,7 @@ test('run (with args, process.send not available)', async () => {
   expect(lookpath).toHaveBeenCalled()
 })
 
-test('run (with args, logs folder exists', async () => {
+test('run (with args, logs folder exists)', async () => {
   const pid = 789
   const forkMockReturn = {
     pid,
@@ -90,7 +90,7 @@ test('run (with args, logs folder exists', async () => {
   expect(lookpath).toHaveBeenCalled()
 })
 
-test('run (with args, command not found or not executable', async () => {
+test('run (with args, command not found or not executable)', async () => {
   lookpath.mockReturnValueOnce(undefined)
 
   const args = ['command', 'arg1']
