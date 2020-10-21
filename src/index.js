@@ -10,12 +10,35 @@ governing permissions and limitations under the License.
 */
 
 const { fork } = require('child_process')
+const { lookpath } = require('lookpath')
+const npmRunPath = require('npm-run-path')
 const debug = require('debug')('aio-run-detached')
 const path = require('path')
 const pkg = require(path.join(__dirname, '..', 'package.json'))
 const fs = require('fs')
+const os = require('os')
 
 const LOGS_FOLDER = 'logs'
+
+/**
+ * Starts out a log file using the name provided.
+ *
+ * @param {string} name the name of the log file
+ * @returns {object} properties: fd for filedescriptor, filepath for log file path
+ */
+function startLog (name) {
+  const filepath = path.resolve(path.join(LOGS_FOLDER, name))
+  const timestamp = new Date().toISOString()
+
+  const fd = fs.openSync(filepath, 'a')
+  fs.writeSync(fd, `${timestamp} log start${os.EOL}`)
+  debug(`Writing to logfile ${filepath}`)
+
+  return {
+    fd,
+    filepath
+  }
+}
 
 /**
  * Run the commands specified in a detached process.
@@ -27,24 +50,31 @@ async function run (args = []) {
     throw new Error('You must specify at least one argument')
   }
 
-  fs.accessSync(args[0], fs.constants.X_OK)
+  // add the node_modules/.bin folder to the path
+  process.env.PATH = npmRunPath()
+  // lookpath looks for the command in the path, and checks whether it is executable
+  const commandPath = await lookpath(args[0])
+  if (!commandPath) {
+    throw new Error(`Command "${args[0]}" was not found in the path, or is not executable.`)
+  } else {
+    debug(`Command "${args[0]}" found at ${commandPath}`)
+  }
 
   if (!fs.existsSync(LOGS_FOLDER)) {
     fs.mkdirSync(LOGS_FOLDER)
   }
 
-  const outFile = path.join(LOGS_FOLDER, `${args[0]}.out.log`)
-  const errFile = path.join(LOGS_FOLDER, `${args[0]}.err.log`)
-  debug(`Writing stdout to ${outFile}, stderr to ${errFile}`)
+  const outFile = startLog(`${args[0]}.out.log`)
+  const errFile = startLog(`${args[0]}.err.log`)
 
   debug(`Running command detached: ${JSON.stringify(args)}`)
-  const child = fork(args[0], args.slice(1), {
+  const child = fork(commandPath, args.slice(1), {
     detached: true,
     windowsHide: true,
     stdio: [
       'ignore',
-      fs.openSync(outFile, 'a'),
-      fs.openSync(errFile, 'a'),
+      outFile.fd,
+      errFile.fd,
       'ipc'
     ]
   })
@@ -58,8 +88,8 @@ async function run (args = []) {
         bin: Object.keys(pkg.bin)[0],
         args,
         logs: {
-          stdout: outFile,
-          stderr: errFile
+          stdout: outFile.filepath,
+          stderr: errFile.filepath
         },
         pid: child.pid
       }

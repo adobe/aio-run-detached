@@ -16,10 +16,12 @@
     "unit-tests": "jest --config test/jest.config.js --maxWorkers=2"
   },
   "keywords": [],
-  "author": "",
+  "author": "Adobe Inc.",
   "license": "Apache-2.0",
   "dependencies": {
-    "debug": "^4.2.0"
+    "debug": "^4.2.0",
+    "lookpath": "^1.1.0",
+    "npm-run-path": "^4.0.1"
   },
   "devDependencies": {
     "@adobe/eslint-config-aio-lib-config": "^1.2.1",
