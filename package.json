@@ -1,6 +1,6 @@
 {
   "name": "@adobe/aio-run-detached",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Runs commands in a detached process, reports to the parent process the detached process pid",
   "repository": "https://github.com/adobe/aio-run-detached",
   "bugs": {
