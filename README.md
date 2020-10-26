@@ -56,14 +56,14 @@ For example:
 }
 ```
 
-Log file name format: `{processname}.out.log` and `{processname}`.err.log,
+Log file name format: `{processname}.out.log` and `{processname}`.err.log.
 
 In this example, your `stdout` log will be called `long-running-process.sh.out.log` and
 your `stderr` log will be called `long-running-process.sh.err.log`.
 
-Both files will be appended to, and will be created if they don't exist, and both will be created inside a `logs` folder in your current working folder. Make sure you put your `logs` folder in your `.gitignore` in case there are secrets being logged.
+Both files will be appended to, and will be created if they don't exist, and both will be created inside a `logs` folder in your current working folder. Make sure you put your `logs` folder in your `.gitignore` in case there are secrets being logged. Newly generated templates will have this folder added in .gitignore.
 
-Since the logs are appended to the file, it is recommended that your logs include a timestamp to differentiate between different runs of the process.
+On every run, a timestamp is logged to the log file to differentiate runs.
 
 ## Contributing
 
