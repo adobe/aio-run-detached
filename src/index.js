@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { fork } = require('child_process')
+const { spawn } = require('child_process')
 const { lookpath } = require('lookpath')
 const npmRunPath = require('npm-run-path')
 const debug = require('debug')('aio-run-detached')
@@ -68,9 +68,10 @@ async function run (args = []) {
   const errFile = startLog(`${args[0]}.err.log`)
 
   debug(`Running command detached: ${JSON.stringify(args)}`)
-  const child = fork(commandPath, args.slice(1), {
+  const child = spawn(commandPath, args.slice(1), {
     detached: true,
     windowsHide: true,
+    shell: true,
     stdio: [
       'ignore',
       outFile.fd,

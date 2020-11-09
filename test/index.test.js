@@ -4,7 +4,7 @@ jest.mock('fs')
 jest.mock('child_process')
 jest.mock('lookpath')
 
-const { fork } = require('child_process')
+const { spawn } = require('child_process')
 const { lookpath } = require('lookpath')
 const fs = require('fs')
 const path = require('path')
@@ -32,7 +32,7 @@ test('run (with args, process.send available)', async () => {
     pid,
     unref: jest.fn()
   }
-  fork.mockReturnValueOnce(forkMockReturn)
+  spawn.mockReturnValueOnce(forkMockReturn)
   lookpath.mockReturnValueOnce('my/path')
 
   const args = ['command', 'arg1']
@@ -61,7 +61,7 @@ test('run (with args, process.send not available)', async () => {
     pid,
     unref: jest.fn()
   }
-  fork.mockReturnValueOnce(forkMockReturn)
+  spawn.mockReturnValueOnce(forkMockReturn)
   lookpath.mockReturnValueOnce('my/path')
 
   const args = ['command', 'arg1']
@@ -78,7 +78,7 @@ test('run (with args, logs folder exists)', async () => {
     pid,
     unref: jest.fn()
   }
-  fork.mockReturnValueOnce(forkMockReturn)
+  spawn.mockReturnValueOnce(forkMockReturn)
   lookpath.mockReturnValueOnce('my/path')
   fs.existsSync.mockReturnValueOnce(true)
 
@@ -98,6 +98,6 @@ test('run (with args, command not found or not executable)', async () => {
   await expect(index.run(args))
     .rejects.toEqual(new Error(`Command "${args[0]}" was not found in the path, or is not executable.`))
 
-  expect(fork).not.toHaveBeenCalled()
+  expect(spawn).not.toHaveBeenCalled()
   expect(lookpath).toHaveBeenCalled()
 })
