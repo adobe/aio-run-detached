@@ -42,6 +42,8 @@ For example, if you have a long running command called `long-running-process.sh`
 
 `aio-run-detached` will report back to the App plugin the process id of the detached process, so that the App plugin can terminate the detached process when the App plugin command exits.
 
+The first argument after `aio-run-detached` **must** be an executable. Any subsequent arguments that use shell operators must be quote escaped. See the `Shell Operators Must Be Quoted` section belo.w
+
 ## Logging
 
 Since it is a detached process, logs from stdout and stderr are not available in the terminal. Instead, the logs are written out to disk.
@@ -63,6 +65,37 @@ your `stderr` log will be called `long-running-process.sh.err.log`.
 Both files will be appended to, and will be created if they don't exist, and both will be created inside a `logs` folder in your current working folder. Make sure you put your `logs` folder in your `.gitignore` in case there are secrets being logged. Newly generated templates will have this folder added in .gitignore.
 
 On every run, a timestamp is logged to the log file to differentiate runs.
+
+## Shell Operators Must Be Quoted
+
+As an example, pipe, redirection and logical operators must be quoted. This includes other shell operators. If not, the operators will apply to `aio-run-detached` itself and not to the executable that `aio-run-detached` will run.
+
+Pipe operator example:
+```json
+{
+  "scripts": {
+    "pre-app-run": "aio-run-detached cat package.json '|' jq .version"
+  }
+}
+```
+
+Redirection operator example:
+```json
+{
+  "scripts": {
+    "pre-app-run": "aio-run-detached echo this is fine '>' someFile.txt"
+  }
+}
+```
+
+Logical operator example:
+```json
+{
+  "scripts": {
+    "pre-app-run": "aio-run-detached echo this is ok '&&' echo this is fine"
+  }
+}
+```
 
 ## Contributing
 
