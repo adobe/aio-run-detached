@@ -42,7 +42,7 @@ For example, if you have a long running command called `long-running-process.sh`
 
 `aio-run-detached` will report back to the App plugin the process id of the detached process, so that the App plugin can terminate the detached process when the App plugin command exits.
 
-The first argument after `aio-run-detached` **must** be an executable. Any subsequent arguments that use shell operators must be quote escaped. See the `Shell Operators Must Be Quoted` section belo.w
+The first argument after `aio-run-detached` **must** be an executable. Any subsequent arguments that use shell operators must be quote escaped. See the [`Shell Operators Must Be Quoted`](#shell-operators-must-be-quoted) section below.
 
 ## Logging
 
