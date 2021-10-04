@@ -17,12 +17,12 @@ governing permissions and limitations under the License.
 
 # @adobe/aio-run-detached
 
-Helper command for the Adobe I/O CLI [App Plugin](https://github.com/adobe/aio-cli-plugin-app) and Adobe [Project Firefly](https://www.adobe.io/apis/experienceplatform/project-firefly/docs.html).
+Helper command for the Adobe I/O CLI [App Plugin](https://github.com/adobe/aio-cli-plugin-app) and [Adobe Developer App Builder](https://www.adobe.io/apis/experienceplatform/project-firefly/docs.html).
 
 
 This command runs another command in a [detached process](https://nodejs.org/api/child_process.html#child_process_options_detached), and reports to the parent process that calls it, the detached process' pid for cleanup in the future.
 
-You would run your command in a detached process if it is a long running process, and the use case for it is running a command in a [Project Firefly Event Hook.](https://www.adobe.io/apis/experienceplatform/project-firefly/docs.html#!AdobeDocs/project-firefly/master/guides/app-hooks.md)
+You would run your command in a detached process if it is a long running process, and the use case for it is running a command in an [App Builder Event Hook.](https://www.adobe.io/apis/experienceplatform/project-firefly/docs.html#!AdobeDocs/project-firefly/master/guides/app-hooks.md)
 
 ## Usage
 
