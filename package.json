@@ -23,6 +23,9 @@
     "lookpath": "^1.1.0",
     "npm-run-path": "^4.0.1"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@adobe/eslint-config-aio-lib-config": "^2.0.0",
     "eol": "^0.9.1",
