@@ -24,7 +24,7 @@
     "npm-run-path": "^4.0.1"
   },
   "devDependencies": {
-    "@adobe/eslint-config-aio-lib-config": "^2.0.2",
+    "@adobe/eslint-config-aio-lib-config": "^3.0.2",
     "eol": "^0.9.1",
     "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
