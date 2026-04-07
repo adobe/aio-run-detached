@@ -39,5 +39,8 @@
     "jest-junit": "^16.0.0",
     "stdout-stderr": "^0.1.13",
     "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
